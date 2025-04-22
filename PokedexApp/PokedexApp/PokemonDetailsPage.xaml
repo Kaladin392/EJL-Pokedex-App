@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:PokedexApp.Model"
+             xmlns:viewModel="clr-namespace:PokedexApp.ViewModel"
+             xmlns:converters="clr-namespace:PokedexApp.Converters"
+             x:Class="PokedexApp.PokemonDetailsPage"
+             Title="{Binding name}">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" 
+                             Spacing="15" 
+                             BackgroundColor="#000">
+            <Border Stroke="#fff" 
+                    StrokeShape="RoundRectangle 1000" 
+                    StrokeThickness="5" 
+                    HeightRequest="200" 
+                    WidthRequest="200" 
+                    HorizontalOptions="Center">
+                <Image Source="{Binding image}"
+                       BackgroundColor="{Binding type1Color}"
+                       Aspect="AspectFill" />
+            </Border>
+
+            <StackLayout Spacing="5" 
+                         HorizontalOptions="Center">
+                <Label Text="{Binding dexNum}"
+                       FontFamily="PokemonFont"
+                       TextColor="#fff" 
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center" />
+                <Label Text="{Binding name}"
+                       FontFamily="PokemonFont"
+                       TextColor="#777"
+                       FontSize="28"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center" />
+                <Label Text="{Binding classification}"
+                       TextColor="#fff" 
+                       FontFamily="PokemonFont"
+                       FontSize="16"
+                       FontAttributes="Italic"
+                       HorizontalOptions="Center" />
+            </StackLayout>
+
+            <Border Padding="10" 
+                    StrokeShape="RoundRectangle 10" 
+                    Stroke="#cccccc" 
+                    StrokeThickness="1">
+                <Border.Background>
+                    <LinearGradientBrush 
+                        StartPoint="0,0" 
+                        EndPoint="1,1">
+                        <GradientStop Color="{Binding type1Color}" 
+                                      Offset="0.0" />
+                        <GradientStop Color="{Binding type2Color}" 
+                                      Offset="1.0" />
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Label Text="{Binding type}"
+                       FontFamily="PokemonFont"
+                       TextColor="#000"
+                       FontSize="18"
+                       HorizontalTextAlignment="Center" />
+            </Border>
+
+
+            <Border StrokeThickness="1" 
+                    Stroke="#cccccc" 
+                    BackgroundColor="White" 
+                    Padding="15" 
+                    StrokeShape="RoundRectangle 10">
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Pokédex Entry"
+                           FontFamily="PokemonFont"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="#333333" />
+                    <Label Text="{Binding dexEntryRB}"
+                           FontFamily="PokemonFont"
+                           FontSize="16"
+                           TextColor="#555555"
+                           LineBreakMode="WordWrap" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border StrokeThickness="1" 
+                    Stroke="#cccccc" 
+                    BackgroundColor="White" 
+                    Padding="15" 
+                    StrokeShape="RoundRectangle 10">
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Details"
+                           FontFamily="PokemonFont"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="#333333" />
+                    <StackLayout Spacing="5">
+                        <Label Text="{Binding height, StringFormat='Height: {0}'}" 
+                               TextColor="#666666" 
+                               FontSize="16" />
+                        <Label Text="{Binding weight, StringFormat='Weight: {0}'}" 
+                               TextColor="#666666" 
+                               FontSize="16" />
+                        <Label Text="{Binding evolution, StringFormat='Evolution: {0}'}" 
+                               TextColor="#666666" 
+                               FontSize="16" />
+                        <Label Text="{Binding baseStats, StringFormat='Base Stats: {0}'}" 
+                               TextColor="#666666" 
+                               FontSize="16" />
+                        <Label Text="{Binding catchRate, StringFormat='Catch Rate: {0}'}" 
+                               TextColor="#666666" 
+                               FontSize="16" />
+                    </StackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <Border StrokeThickness="1" 
+                    Stroke="#cccccc" 
+                    BackgroundColor="White" 
+                    Padding="15" 
+                    StrokeShape="RoundRectangle 10">
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Obtained Location"
+                           FontFamily="PokemonFont"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="#333333" />
+                    <Label Text="{Binding obtainedLocationRed}"
+                           TextColor="#555555"
+                           FontSize="16"
+                           LineBreakMode="WordWrap" />
+                    <Label Text="{Binding obtainedLocationBlue}"
+                           TextColor="#555555"
+                           FontSize="16"
+                           LineBreakMode="WordWrap" />
+                    <Label Text="{Binding obtainedLocationYellow}"
+                           TextColor="#555555"
+                           FontSize="16"
+                           LineBreakMode="WordWrap" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border StrokeThickness="1" 
+                    Stroke="#cccccc" 
+                    BackgroundColor="White" 
+                    Padding="15" 
+                    StrokeShape="RoundRectangle 10">
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Tips"
+                           FontFamily="PokemonFont"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="#333333" />
+                    <StackLayout Spacing="5">
+                        <Label Text="{Binding tip1}" 
+                               TextColor="#666666" 
+                               FontSize="16" />
+                        <Label Text="{Binding tip2}" 
+                               TextColor="#666666" 
+                               FontSize="16" />
+                        <Label Text="{Binding tip3}" 
+                               TextColor="#666666" 
+                               FontSize="16" />
+                    </StackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

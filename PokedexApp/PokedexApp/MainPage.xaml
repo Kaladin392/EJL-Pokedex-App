@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:PokedexApp.Model"
+             xmlns:viewModel="clr-namespace:PokedexApp.ViewModel"
+             xmlns:converters="clr-namespace:PokedexApp.Converters"
+             x:Class="PokedexApp.MainPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolToImageConverter x:Key="BoolToImageConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Reset Caught" Clicked="OnResetButtonClicked"/>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.BindingContext>
+        <viewModel:MainPageViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto" BackgroundColor="#000">
+        <SearchBar x:Name="searchBar"
+                   Placeholder="Search Pokémon"
+                   TextChanged="OnSearchBarTextChanged"
+                   Grid.Row="0"
+                   BackgroundColor="#000"
+                   TextColor="#fff"/>
+
+        <Picker x:Name="filterPicker"
+                Title="Filter by..."
+                Grid.Row="1"
+                SelectedIndexChanged="OnFilterPickerSelectedIndexChanged"
+                BackgroundColor="#000000"
+                TextColor="#fff"
+                TitleColor="#fff">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>All</x:String>
+                    <x:String>Isn't Caught</x:String>
+                    <x:String>Is Caught</x:String>
+                    <x:String>Normal Types</x:String>
+                    <x:String>Fire Types</x:String>
+                    <x:String>Water Types</x:String>
+                    <x:String>Grass Types</x:String>
+                    <x:String>Electric Types</x:String>
+                    <x:String>Ice Types</x:String>
+                    <x:String>Fighting Types</x:String>
+                    <x:String>Poison Types</x:String>
+                    <x:String>Ground Types</x:String>
+                    <x:String>Flying Types</x:String>
+                    <x:String>Psychic Types</x:String>
+                    <x:String>Bug Types</x:String>
+                    <x:String>Rock Types</x:String>
+                    <x:String>Ghost Types</x:String>
+                    <x:String>Dragon Types</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+
+        <CollectionView ItemsSource="{Binding Pokemon}" 
+                        Grid.Row="2"
+                        SelectionMode="None"
+                        BackgroundColor="#000">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Pokemon">
+                    <Border BackgroundColor="#fff" 
+                            Stroke="grey" 
+                            StrokeThickness="3" 
+                            StrokeShape="RoundRectangle 15" 
+                            Margin="9, 7, 9, 0">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModel:MainPageViewModel}}, Path=GoToPokemonDetailsCommand}"
+                                                  CommandParameter="{Binding .}" />
+                        </Border.GestureRecognizers>
+                        <Grid ColumnDefinitions="Auto,*,*">
+                            <Border Stroke="Black" 
+                                    StrokeThickness="2" 
+                                    WidthRequest="75" 
+                                    HeightRequest="75" 
+                                    Margin="12, 0, 0, 0" 
+                                    StrokeShape="RoundRectangle 15">
+                                <Grid>
+                                    <Image Source="{Binding image}"
+                                       BackgroundColor="{Binding type1Color}"
+                                       HeightRequest="75"
+                                       WidthRequest="75"
+                                       Aspect="AspectFill"/>
+                                    <Border Stroke="black"
+                                            StrokeThickness="1"
+                                            StrokeShape="RoundRectangle 10"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="Start">
+                                        <Label Text="{Binding dexNum}"
+                                               FontFamily="PokemonFont"
+                                               FontSize="12"
+                                               TextColor="black"
+                                               BackgroundColor="white"
+                                               Padding="1"
+                                               VerticalOptions="Center"/>
+                                    </Border>
+                                </Grid>
+                            </Border>
+                            <VerticalStackLayout Grid.RowSpan="2" Grid.Column="1" Padding="10" Spacing="10" Margin="0, 0, -38, 0">
+                                <Label 
+                                    FontFamily="PokemonFont" 
+                                    TextColor="black" 
+                                    Text="{Binding name}" 
+                                    FontSize="17"
+                                    Margin="0, 0, 0, 10"/>
+                                <Label 
+                                    FontFamily="PokemonFont" 
+                                    TextColor="black" 
+                                    Text="{Binding type}" 
+                                    FontSize="11"/>
+                            </VerticalStackLayout>
+                            <ImageButton
+                                x:Name="ToggleButton"
+                                Source="{Binding isCaught, Converter={StaticResource BoolToImageConverter}}"
+                                WidthRequest="80"
+                                HeightRequest="80"
+                                Grid.Column="2"
+                                Clicked="ToggleButton_Clicked"
+                                Padding="0"
+                                Margin="0, 0, -10, 0"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Label Text="{Binding CaughtPokemonCount, StringFormat='{0}/151 Pokémon caught'}"
+               Grid.Row="3"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               TextColor="#fff"
+               BackgroundColor="#000"
+               FontSize="16.3"
+               FontFamily="PokemonFont"/>
+    </Grid>
+</ContentPage>
